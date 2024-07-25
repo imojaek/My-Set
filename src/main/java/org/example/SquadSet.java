@@ -25,6 +25,11 @@ public class SquadSet {
         return sum(other.resultAll());
     }
 
+    public Integer[] complement(SquadSet other) {
+        List<Integer> result = new ArrayList<>(myList);
+        result.removeAll(List.of(other.resultAll()));
+        return result.toArray(Integer[]::new);
+    }
 
     private Integer[] sum(Integer[] other) {
         List<Integer> result = new ArrayList<>(myList);
