@@ -31,6 +31,12 @@ public class SquadSet {
         return result.toArray(Integer[]::new);
     }
 
+    public Integer[] intersect(SquadSet other) {
+        List<Integer> result = new ArrayList<>(myList);
+        result.retainAll(List.of(other.resultAll()));
+        return result.toArray(Integer[]::new);
+    }
+
     private Integer[] sum(Integer[] other) {
         List<Integer> result = new ArrayList<>(myList);
         addOnlyUnique(result, other);
