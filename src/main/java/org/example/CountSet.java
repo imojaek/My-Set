@@ -40,7 +40,7 @@ public class CountSet {
         if(newValue.contains(element)) {
             int index = newValue.indexOf(element);
             newCount.set(index, newCount.get(index) - 1);
-            if (newCount.get(index) - 1 <= 0) {
+            if (newCount.get(index) <= 0) {
                 newValue.remove(index);
                 newCount.remove(index);
             }
@@ -78,16 +78,18 @@ public class CountSet {
     }
 
     public CountSet complement(CountSet other) {
-        List<Integer> newValue = new ArrayList<>();
-        List<Integer> newCount = new ArrayList<>();
+        List<Integer> newValue = new ArrayList<>(value);
+        List<Integer> newCount = new ArrayList<>(count);
 
         for (int i = 0; i < other.value.size(); i++) {
             if (value.contains(other.value.get(i))) {
-                int index = value.indexOf(other.value.get(i));
-                int tmp = count.get(index) - other.count.get(i);
-                if (tmp > 0) {
-                    newValue.add(value.get(index));
-                    newCount.add(tmp);
+                int index = newValue.indexOf(other.value.get(i));
+                int tmpCount = newCount.get(index) - other.count.get(i);
+                if (tmpCount > 0) {
+                    newCount.set(index, tmpCount);
+                } else {
+                    newValue.remove(index);
+                    newCount.remove(index);
                 }
             }
         }
