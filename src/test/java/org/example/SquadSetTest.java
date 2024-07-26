@@ -21,7 +21,7 @@ class SquadSetTest {
     @DisplayName("SquadSet 간의 합집합을 반환받을 수 있다.")
     void sumTest() {
         Integer[] result = set1.sum(set2);
-        assertArrayEquals(new Integer[]{1, 2, 3}, result);
+        assertArrayEquals(new Integer[]{1, 2, 3, 4}, result);
     }
 
     @Test
