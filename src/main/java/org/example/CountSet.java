@@ -25,6 +25,10 @@ public class CountSet {
             int index = newValue.indexOf(element);
             newCount.set(index, newCount.get(index) + 1);
         }
+        else {
+            newValue.add(element);
+            newCount.add(1);
+        }
 
         return new CountSet(Collections.unmodifiableList(newValue), Collections.unmodifiableList(newCount));
     }
