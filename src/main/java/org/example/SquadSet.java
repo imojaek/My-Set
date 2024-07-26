@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SquadSet {
 
     private final List<Integer> myList;
 
     public SquadSet(Integer[] input) {
-        List<Integer> tempList = new ArrayList<>();
-        addOnlyUnique(tempList, input);
-        myList = Collections.unmodifiableList(tempList);
+        myList = Collections.unmodifiableList(Arrays.stream(input)
+                .distinct()
+                .collect(Collectors.toList()));
     }
     private void addOnlyUnique(List<Integer> list, Integer[] target) {
         for (Integer num : target) {
@@ -22,25 +24,21 @@ public class SquadSet {
     }
 
     public Integer[] sum(SquadSet other) {
-        return sum(other.resultAll());
+        return Stream.concat(myList.stream(), other.myList.stream()) // 동일한 타입의 스트림을 합친다.
+                .distinct()
+                .toArray(Integer[]::new);
     }
 
     public Integer[] complement(SquadSet other) {
-        List<Integer> result = new ArrayList<>(myList);
-        result.removeAll(List.of(other.resultAll()));
-        return result.toArray(Integer[]::new);
+        return myList.stream()
+                .filter(num -> !other.myList.contains(num))
+                .toArray(Integer[]::new);
     }
 
     public Integer[] intersect(SquadSet other) {
-        List<Integer> result = new ArrayList<>(myList);
-        result.retainAll(List.of(other.resultAll()));
-        return result.toArray(Integer[]::new);
-    }
-
-    private Integer[] sum(Integer[] other) {
-        List<Integer> result = new ArrayList<>(myList);
-        addOnlyUnique(result, other);
-        return result.toArray(Integer[]::new);
+        return myList.stream()
+                .filter(num -> other.myList.contains(num)) // (other.myList::contains) 로 가능한데 이건 왜이리 안읽히는지..
+                .toArray(Integer[]::new);
     }
 
     public Integer[] resultAll() {
