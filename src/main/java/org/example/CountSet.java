@@ -62,12 +62,15 @@ public class CountSet {
         List<Integer> newCount = new ArrayList<>(count);
 
         for (int i = 0; i < other.value.size(); i++) {
+            Integer element = other.value.get(i);
+            Integer elementCount = other.count.get(i);
+
             if (newValue.contains(other.value.get(i))) {
-                int index = newValue.indexOf(other.value.get(i));
-                newCount.set(index, newCount.get(index) + other.count.get(i));
+                int index = newValue.indexOf(element);
+                newCount.set(index, newCount.get(index) + elementCount);
             } else {
-                newValue.add(other.value.get(i));
-                newCount.add(other.count.get(i));
+                newValue.add(element);
+                newCount.add(elementCount);
             }
         }
 
